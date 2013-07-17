@@ -83,3 +83,14 @@ canvas-packages:
     - require:
       - pkgrepo: brightbox/ruby-ng
 
+bundler:    
+  gem.installed    
+     
+install-bundler:    
+  cmd:    
+    - run    
+    - name: "bundle install --path vendor/bundle --without=sqlite"     
+    - require:    
+      - gem: bundler    
+    - cwd: /var/canvas    
+    - unless: "[ -e /var/canvas/.bundle/config ]"
