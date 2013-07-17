@@ -83,6 +83,7 @@ canvas-packages:
     - require:
       - pkgrepo: brightbox/ruby-ng
 
+# Next two stanzas install and configure bundler
 bundler:    
   gem.installed    
      
@@ -94,3 +95,12 @@ install-bundler:
       - gem: bundler    
     - cwd: /var/canvas    
     - unless: "[ -e /var/canvas/.bundle/config ]"
+
+# Set up example configuration. Would be better to cp instead of symlink.
+{% for config in ('amazon_s3', 'database', 'delayed_jobs', 'domain',           
+    'file_store', 'outgoing_mail', 'security', 'external_migration') %}        
+/var/canvas/config/{{ config }}.yml:                                           
+  file.symlink:                                                                
+    - target: /var/canvas/config/{{ config }}.yml.example                      
+{% endfor %}
+
