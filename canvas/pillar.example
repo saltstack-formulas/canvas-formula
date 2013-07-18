@@ -1,9 +1,65 @@
 canvas:
+  development:
+    db_database: canvas_development
+    db_timeout: 5000
+    s3_bucket_name: development-bucket
+    s3_access_key_id: access_key
+    s3_secret_access_key: secret_key
+    smtp_address: smtp.example.com
+    smtp_port: 25
+    smtp_user_name: user
+    smtp_password: password
+    smtp_authentication: plain
+    smtp_domain: example.com
+    smtp_outgoing_address: canvas@example.com
+    smtp_default_name: Instructure Canvas
+    domain_domain: localhost
+  test:
+    db_database: canvas_test
+    db_host: localhost
+    db_username: canvas
+    db_timeout: 5000
+    s3_bucket_name: test-bucket
+    s3_access_key_id: access_key
+    s3_secret_access_key: secret_key
+    smtp_delivery_method: test
+    domain_domain: localhost:3000
   production:
+    db_database: canvas_production
     db_host: localhost
     db_username: canvas
     db_password: badpass
+    db_timeout: 5000
+    queuedb_database: canvas_queue_production
     queuedb_host: localhost
     queuedb_username: canvas
     queuedb_password: badpass
+    queuedb_timeout: 5000
+    s3_bucket_name: production-bucket
+    s3_access_key_id: access_key
+    s3_secret_access_key: secret_key
+    smtp_address: smtp.example.com
+    smtp_port: 25
+    smtp_user_name: user
+    smtp_password: password
+    smtp_authentication: plain
+    smtp_domain: example.com
+    smtp_outgoing_address: canvas@example.com
+    smtp_default_name: Instructure Canvas
+    domain_domain: canvas.example.com
+    domain_ssl: true'
+  multiple_inboxes:
+    smtp_address: smtp.example.com
+    smtp_port: 25
+    smtp_user_name: user
+    smtp_password: password
+    smtp_authentication: plain
+    smtp_domain: example.com
+    smtp_outgoing_address: canvas@example.com
+    smtp_default_name: Instructure Canvas
+    smtp_reply_to_addresses:
+      - canvas1@example.net
+      - canvas2@example.net
+      - canvas3@example.net
+      - canvas4@example.net
 

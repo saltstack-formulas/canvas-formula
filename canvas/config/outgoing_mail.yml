@@ -1,0 +1,44 @@
+development:
+  address: "{{ salt['pillar.get']('canvas:development:smtp_address', 'smtp.example.com') }}"
+  port: "{{ salt['pillar.get']('canvas:development:smtp_port', '25') }}"
+  user_name: "{{ salt['pillar.get']('canvas:development:smtp_user_name', 'user') }}"
+  password: "{{ salt['pillar.get']('canvas:development:smtp_password', 'password') }}"
+  authentication: "{{ salt['pillar.get']('canvas:development:smtp_authentication', 'plain') }}" # plain, login, or cram_md5
+  domain: "{{ salt['pillar.get']('canvas:development:smtp_domain', 'example.com') }}"
+  outgoing_address: "{{ salt['pillar.get']('canvas:development:smtp_outgoing_address', 'canvas@example.com') }}"
+  default_name: "{{ salt['pillar.get']('canvas:development:smtp_default_name', 'Instructure Canvas') }}"
+
+# or to use sendmail --
+#
+# development:
+#   delivery_method: "sendmail"
+
+test:
+  delivery_method: "{{ salt['pillar.get']('canvas:test:smtp_delivery_method', 'test') }}"
+
+production:
+  address: "{{ salt['pillar.get']('canvas:production:smtp_address', 'smtp.example.com') }}"
+  port: "{{ salt['pillar.get']('canvas:production:smtp_port', '25') }}"
+  user_name: "{{ salt['pillar.get']('canvas:production:smtp_user_name', 'user') }}"
+  password: "{{ salt['pillar.get']('canvas:production:smtp_password', 'password') }}"
+  authentication: "{{ salt['pillar.get']('canvas:production:smtp_authentication', 'plain') }}" # plain, login, or cram_md5
+  domain: "{{ salt['pillar.get']('canvas:production:smtp_domain', 'example.com') }}"
+  outgoing_address: "{{ salt['pillar.get']('canvas:production:smtp_outgoing_address', 'canvas@example.com') }}"
+  default_name: "{{ salt['pillar.get']('canvas:production:smtp_default_name', 'Instructure Canvas') }}"
+
+# If receiving mail from multiple inboxes (see incoming_mail.yml.example),
+# you'll want to include those addresses in a reply_to_addresses array so
+# Canvas will select the Reply-To field of outgoing messages from all of the
+# incoming mailboxes.
+
+multiple_inboxes:
+  address: "{{ salt['pillar.get']('canvas:multiple_inboxes:smtp_address', 'smtp.example.com') }}"
+  port: "{{ salt['pillar.get']('canvas:multiple_inboxes:smtp_port', '25') }}"
+  user_name: "{{ salt['pillar.get']('canvas:multiple_inboxes:smtp_user_name', 'user') }}"
+  password: "{{ salt['pillar.get']('canvas:multiple_inboxes:smtp_password', 'password') }}"
+  authentication: "{{ salt['pillar.get']('canvas:multiple_inboxes:smtp_authentication', 'plain') }}" # plain, login, or cram_md5
+  domain: "{{ salt['pillar.get']('canvas:multiple_inboxes:smtp_domain', 'example.com') }}"
+  outgoing_address: "{{ salt['pillar.get']('canvas:multiple_inboxes:smtp_outgoing_address', 'canvas@example.com') }}"
+  default_name: "{{ salt['pillar.get']('canvas:multiple_inboxes:smtp_default_name', 'Instructure Canvas') }}"
+  reply_to_addresses: {% for address in salt['pillar.get']('canvas:multiple_inboxes:smtp_reply_to_addresses', []) %}
+    - "{{ address }}"{% endfor %}

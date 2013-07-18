@@ -1,0 +1,42 @@
+# do not create a queue: section for your test environment
+test:
+  adapter: postgresql
+  encoding: utf8
+  database: {{ salt['pillar.get']('canvas:test:db_database', 'canvas_test') }}
+  host: {{ salt['pillar.get']('canvas:test:db_host', 'localhost') }}
+  username: {{ salt['pillar.get']('canvas:test:db_username', 'canvas') }}
+  timeout: {{ salt['pillar.get']('canvas:test:db_timeout', '5000') }}
+
+test-in-memory:
+  adapter: sqlite3
+  encoding: utf8
+  database: ':memory:'
+  pool: 1
+
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: {{ salt['pillar.get']('canvas:development:db_database', 'canvas_development') }}
+  timeout: {{ salt['pillar.get']('canvas:development:db_timeout', '5000') }}
+  queue:
+    adapter: postgresql
+    encoding: utf8
+    database: {{ salt['pillar.get']('canvas:development:queuedb_database', 'canvas_queue_development') }}
+    timeout: {{ salt['pillar.get']('canvas:development:queuedb_timeout', '5000') }}
+    
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: {{ salt['pillar.get']('canvas:production:db_database', 'canvas_production') }}
+  host: {{ salt['pillar.get']('canvas:production:db_host', 'localhost') }}
+  username: {{ salt['pillar.get']('canvas:production:db_username', 'canvas') }}
+  password: {{ salt['pillar.get']('canvas:production:db_password', 'badpass') }}
+  timeout: {{ salt['pillar.get']('canvas:production:db_timeout', '5000') }}
+  queue:
+    adapter: postgresql
+    encoding: utf8
+    database: {{ salt['pillar.get']('canvas:production:queuedb_database', 'canvas_queue_production') }}
+    host: {{ salt['pillar.get']('canvas:production:queuedb_host', 'localhost') }}
+    username: {{ salt['pillar.get']('canvas:production:queuedb_username', 'canvas') }}
+    password: {{ salt['pillar.get']('canvas:production:queuedb_password', 'badpass') }}
+    timeout: {{ salt['pillar.get']('canvas:production:queuedb_timeout', '5000') }}

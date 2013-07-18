@@ -1,0 +1,12 @@
+test:
+  domain: "{{ salt['pillar.get']('canvas:test:domain_domain', 'localhost') }}"
+
+development:
+  domain: "{{ salt['pillar.get']('canvas:development:domain_domain', 'localhost:3000') }}"
+
+production:
+  domain: "{{ salt['pillar.get']('canvas:production:domain_domain', 'canvas.example.com') }}"
+  # whether this instance of canvas is served over ssl (https) or not
+  # defaults to true for production, false for test/development
+  domain: "{{ salt['pillar.get']('canvas:production:domain_ssl', 'true') }}"
+  # files_domain: "canvasfiles.example.com"
