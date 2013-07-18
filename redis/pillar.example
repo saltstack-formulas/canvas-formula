@@ -1,0 +1,9 @@
+canvas:
+  production:
+    db_host: localhost
+    db_username: canvas
+    db_password: badpass
+    queuedb_host: localhost
+    queuedb_username: canvas
+    queuedb_password: badpass
+
