@@ -10,23 +10,20 @@ include:
 
 # Sets up the databases and users
 canvas-dbuser:
-  postgres_user:
-    - present
+  postgres_user.present:
     - name: canvas
     - createdb: False
     - superuser: False
     - password: badpass
 
 canvas_production:
-  postgres_database:
-    - present
+  postgres_database.present:
     - owner: canvas
     - require:
       - postgres_user: canvas-dbuser
 
 canvas_queue_production:
-  postgres_database:
-    - present
+  postgres_database.present:
     - owner: canvas
     - require:
       - postgres_user: canvas-dbuser
@@ -34,23 +31,20 @@ canvas_queue_production:
 
 # The next stanzas work together to download and install the latest stable
 /tmp/canvas-stable.tar.gz:
-  file:
-    - managed
+  file.managed:
     - source_hash: md5=ab6880705a666becfc9fb95495352291
     - source: http://www.instructure.com/code/canvas-stable.tar.gz
     - unless: "[ -e /tmp/canvas-stable.tar.gz ]"
 
 unpack-canvas:
-  cmd:
-    - run
+  cmd.run:
     - name: "/bin/tar -zxf /tmp/canvas-stable.tar.gz -C /tmp"
     - require:
       - file: /tmp/canvas-stable.tar.gz
     - unless: "[ -e /var/canvas/config.ru ]"
 
 move-canvas:
-  cmd:
-    - run
+  cmd.run:
     - name: "mv /tmp/instructure-canvas-lms* /var/canvas"
     - require:
       - cmd: unpack-canvas
@@ -58,12 +52,12 @@ move-canvas:
 
 # Install canvas dependencies
 python-software-properties:
-  pkg.installed
+  pkg.installed: []
 
 brightbox/ruby-ng:
   pkgrepo.managed:
     - ppa: brightbox/ruby-ng
-    - requires:
+    - require:
         pkg: python-software-properties
 
 canvas-packages:
@@ -84,11 +78,10 @@ canvas-packages:
       - pkgrepo: brightbox/ruby-ng
 
 bundler:
-  gem.installed
+  gem.installed: []
 
 install-bundler:
-  cmd:
-    - run
+  cmd.run:
     - name: "bundle install --path vendor/bundle --without=sqlite"
     - require:
       - gem: bundler
